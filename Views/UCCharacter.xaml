@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="NuCharacter.ViewModels.CharacterViewModel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NuCharacter.Views" xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d" 
+             x:Name="UCCharacter"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+<Grid>
+
+        <Grid Grid.Column="1"  Background="#FF190505" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60*" />
+                <RowDefinition Height="30*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="40*" />
+                <RowDefinition Height="610*" />
+            </Grid.RowDefinitions>
+
+            <TextBox Text="{Binding SelectedGroup.Name}" 
+                           HorizontalAlignment="Left" Grid.Row="0"
+                           VerticalAlignment="Center" Margin="10,0,10,0"
+                           FontWeight="Bold"
+                         Background="{x:Null}" BorderBrush="{x:Null}"
+                           />
+
+            <StackPanel Grid.Row="1" Background="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type fa:FontAwesome}">
+                        <Setter Property="Height" Value="20"/>
+                        <Setter Property="Width" Value="20"/>
+                        <Setter Property="Margin" Value="10,0,10,0"/>
+                        <Setter Property="Foreground" Value="#FFFBFFFF"/>
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <fa:FontAwesome Icon="Plus">
+                    <fa:FontAwesome.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding CreateCharacter}" CommandParameter="{Binding SelectedGroup}"/>
+                    </fa:FontAwesome.InputBindings>
+                </fa:FontAwesome>
+
+                <fa:FontAwesome Icon="Minus">
+                    <fa:FontAwesome.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding RemoveCharacter}" CommandParameter="{Binding SelectedCharacter}" />
+                    </fa:FontAwesome.InputBindings>
+                </fa:FontAwesome>
+
+            </StackPanel>
+
+
+            <hc:SearchBar   
+                   
+                     
+                     Grid.Row="3"
+                     VerticalAlignment="Center" 
+                     hc:InfoElement.Placeholder="Search"
+                    
+                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Stretch" Margin="10,0,10,0"  
+                        />
+            <Grid Grid.Row="4">
+
+                <ListBox 
+                         Background="#F5F3F3" 
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"  
+                         ItemsSource="{Binding All_Characters}" 
+                         SelectedItem="{Binding SelectedCharacter}" 
+                         SelectedIndex="0"
+                         Margin="0,3,0,0" 
+                         >
+
+                    <ListBox.Resources>
+                        <ResourceDictionary Source="../Resources/DataTemplate/Ch_ListBox.xaml"/>
+                    </ListBox.Resources>
+
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete" Command="{Binding RemoveCharacter}" CommandParameter="{Binding SelectedCharacter}"/>
+                            <MenuItem Header="Copy" Command="{Binding Copy}"/>
+                            <MenuItem Header="Paste" Command="{Binding Paste}" CommandParameter="{Binding SelectedGroup}"/>
+                            <MenuItem Header="Cut Up" Command="{Binding CutUp}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+            </Grid>
+        </Grid>
+    </Grid>
+
+
+
+    
+</UserControl>
