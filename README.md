@@ -1,4 +1,4 @@
-# NuCharacter - WPF - 2021
+# NuCharacter - WPF
 
 WPF Project providing MVVM, SQLite
 
